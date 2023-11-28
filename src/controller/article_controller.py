@@ -6,7 +6,6 @@ from src.service.article_service import article_service
 
 app, api = server.app, server.api
 
-
 @api.route('/articles')
 class ArticleListController(Resource):
   def get(self):

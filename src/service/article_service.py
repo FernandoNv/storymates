@@ -1,8 +1,7 @@
 from datetime import date
 
-from src.repository.article_repository import article_repository
-from src.service.comment_service import comment_service
-
+from src.repository import article_repository
+from src.service import comment_service
 
 class ArticleService():
   def get_all(self):
@@ -89,6 +88,8 @@ class ArticleService():
     updatedAt = None
     if(article['updatedAt'] is not None):
       updatedAt = article['updatedAt'].strftime("%c")
+
+    comments = comment_service.get_all_by_id_article(article['id'])
       
     return {
       'id': article['id'],
@@ -97,7 +98,7 @@ class ArticleService():
       'author': article['author'],
       'createdAt': article['createdAt'].strftime("%c"),
       'updatedAt': updatedAt,
-      'comments': list(map(lambda comment: comment_service.to_dto(comment), article['comments']))
+      'comments': list(map(lambda comment: comment_service.to_dto(comment), comments))
     }
 
 
