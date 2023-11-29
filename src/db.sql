@@ -24,3 +24,4 @@ CREATE TABLE comment(
 INSERT INTO article(id, title, content, author) values(null, 'What is Lorem Ipsum?', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has Ipsum.', 'fernando');
 INSERT INTO article(id, title, content, author) values(null, 'What is Ipsum?', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has Ipsum.', 'henrique');
 INSERT INTO article(id, title, content, author) values(null, 'What is Lorem?', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has Ipsum.', 'marcos');
+INSERT INTO article(id, title, content, author) values(null, 'What is it?', 'Lorem the printing and typesetting industry. Lorem Ipsum has Ipsum.', 'fernando');

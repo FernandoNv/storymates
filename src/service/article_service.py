@@ -9,8 +9,8 @@ def get_all():
   return articles
 
 
-def get_all_by_author(username):
-  articles = article_repository.get_all_by_author(username)
+def get_all_by_author(author):
+  articles = article_repository.get_all_by_author(author)
   articles = list(map(lambda article: to_dto(article), articles)) 
 
   return articles
