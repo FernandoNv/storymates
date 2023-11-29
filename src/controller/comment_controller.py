@@ -2,7 +2,7 @@ from flask import Flask
 from flask_restx import Api, Resource
 
 from src.server.instance import server
-from src.service.comment_service import comment_service
+import src.service.comment_service as comment_service
 
 app, api = server.app, server.api
 
