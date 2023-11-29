@@ -1,25 +1,27 @@
 from datetime import datetime
 from flask import Flask, request
 from src.repository.db import db_article
-# from flask_mysqldb import MySQL
-# from src.server.instance import server
+from flask_mysqldb import MySQL
+from src.server.instance import server
 
-# app, api = server.app, server.api
+app, api = server.app, server.api
  
-# app.config['MYSQL_HOST'] = 'db:3306'
-# app.config['MYSQL_USER'] = 'root'
-# app.config['MYSQL_PASSWORD'] = 'password'
-# app.config['MYSQL_DB'] = 'storymates'
+app.config['MYSQL_HOST'] = 'localhost'
+app.config['MYSQL_USER'] = 'root'
+app.config['MYSQL_PASSWORD'] = 'password'
+app.config['MYSQL_DB'] = 'storymates'
  
-# mysql = MySQL(app)
+mysql = MySQL(app)
 
 def get_all():
-  # cursor = mysql.connection.cursor()
-  # cursor.execute('SELECT * FROM articles;')
-  # mysql.connection.commit()
-  # cursor.close()
+  cursor = mysql.connection.cursor()
+  cursor.execute('SELECT * FROM article ORDER BY createdAt DESC LIMIT 100')
+  #https://stackoverflow.com/questions/5010042/mysql-get-column-name-or-alias-from-query
+  fields = [field_md[0] for field_md in cursor.description]
+  result = [dict(zip(fields,row)) for row in cursor.fetchall()]  
+  cursor.close()
 
-  return db_article
+  return result
 
 
 def get_all_by_author(username):
