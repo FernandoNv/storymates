@@ -36,7 +36,7 @@ def main():
         elif choice == '2':
             title = input("Enter the article title: ")
             content = input("Enter the article content: ")
-            create_article(title, content)
+            create_article(name, {"title": title, "content": content})
             print("Article created successfully!")
 
         elif choice == '3':
