@@ -1,7 +1,8 @@
-# cliente_cli.py
 
-from moque import get_articles, create_article, update_article, delete_article
-from moque import get_comments, create_comment, update_comment, delete_comment
+# from moque import get_articles, create_article, update_article, delete_article
+# from moque import get_comments, create_comment, update_comment, delete_comment
+from client import get_articles, create_article, update_article, delete_article
+from client import get_comments, create_comment, update_comment, delete_comment
 
 def print_articles():
     articles = get_articles()
