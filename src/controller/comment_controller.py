@@ -32,8 +32,7 @@ class ArticleCommentController(Resource):
 
   def delete(self, author, id_comment):
     try:
-      delete_comment_dto = api.payload
-      comment_service.delete(author, id_comment, delete_comment_dto)
+      comment_service.delete(author, id_comment)
       return None, 204
     except Exception as e:
       status_code = 400

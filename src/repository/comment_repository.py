@@ -1,34 +1,19 @@
 from src.repository.config import mysql
 from src.repository.util import format_row_to_dict
 
-  #@param: new_comment_dto: {
-  #   'title': string,
-  #    'content': string,
-  #    'author': string,
-  #    'idArticle': int,
-  # } 
-  # return: {
-  #   'id': int,
-  #   'title': string,
-  #   'content': string,
-  #   'author': string,
-  #   'idArticle': int,
-  #   'createdAt': Date,
-  #   'updatedAt': Date  
-  # }
-def create(self, new_comment_dto):
+
+def create(new_comment_dto):
   query = """
-  INSERT INTO comment( title, content, author) 
-  VALUES('{title}', '{content}', '{author}', '{articleId}')
+  INSERT INTO comment(content, author, idArticle) 
+  VALUES('{content}', '{author}', '{idArticle}')
   """
 
   cursor = mysql.connection.cursor()
   cursor.execute(
     query.format(
-      title=new_comment_dto['title'], 
       content=new_comment_dto['content'], 
       author=new_comment_dto['author'],
-      articleId=new_comment_dto['articleId']
+      idArticle=new_comment_dto['idArticle']
     )
   )
   
@@ -41,22 +26,7 @@ def create(self, new_comment_dto):
   return get_by_id(id_created)
 
 
-#@param: update_comment_dto: {
-#   'title': string,
-#    'content': string,
-#    'author': string,
-#    'idArticle': int,
-# } 
-# return: {
-#   'id': int,
-#   'title': string,
-#   'content': string,
-#   'author': string,
-#   'idArticle': int,
-#   'createdAt': Date,
-#   'updatedAt': Date  
-# }
-def update(self, update_comment_dto):
+def update(update_comment_dto):
   query = """
   UPDATE comment 
   SET content = '{content}'
@@ -77,24 +47,48 @@ def update(self, update_comment_dto):
   return get_by_id(update_comment_dto["id"])
 
 
-#@param: id: int
-# return: {
-#   'id': int,
-#   'title': string,
-#   'content': string,
-#   'author': string,
-#   'idArticle': int,
-#   'createdAt': Date,
-#   'updatedAt': Date  
-# }
-def get_by_id(self, id_comment):
-  pass
+def get_by_id(id_comment):
+  query_comment = """
+    SELECT * FROM comment 
+    WHERE id='{id_comment}'
+  """
+  cursor = mysql.connection.cursor()
+  cursor.execute(query_comment.format(id_comment=id_comment))
+
+  comment = format_row_to_dict(cursor)
+
+  if comment is None:
+    raise Exception("Id invalid!")
+
+  comment = comment[0]
+  cursor.close()
+
+  return comment
 
 
-#@param: id: int
-def delete_by_id(self, id_comment):
-  pass
+def delete_by_id(id_comment):
+  query = """
+    DELETE FROM comment WHERE id = {id_comment};
+  """
+  cursor = mysql.connection.cursor()
+  cursor.execute(query.format(id_comment=id_comment))
+
+  mysql.connection.commit()
+  cursor.close()
 
 
 def get_all_by_id_article(id_article):
-  return []
+  query = """
+    SELECT * FROM comment 
+    WHERE idArticle='{id_article}' 
+    ORDER BY createdAt 
+    LIMIT 100
+  """
+
+  cursor = mysql.connection.cursor()
+  cursor.execute(query.format(id_article=id_article))
+  
+  result = format_row_to_dict(cursor)
+  cursor.close()
+  
+  return result

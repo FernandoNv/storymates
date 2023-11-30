@@ -1,5 +1,4 @@
 from flask import Flask, request
-from src.repository.db import db_article
 from flask_mysqldb import MySQL
 from src.server.instance import server
 
