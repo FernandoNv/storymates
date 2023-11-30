@@ -91,17 +91,20 @@ def save(new_article_dto):
 
 
 def delete(id_article):
-  try:
-    index_article = __find_by_id(id_article)
-    db_article.pop(index_article)
-  except Exception as e:
-    raise e
+  query = """
+    DELETE FROM article WHERE id = {id_article};
+  """
+  cursor = mysql.connection.cursor()
+  cursor.execute(query.format(id_article=id_article))
+
+  mysql.connection.commit()
+  cursor.close()
 
 
 def update(article, update_article_dto):
   query = """
   UPDATE article 
-  SET title = '{title}', content = '{content}', author = '{author}'
+  SET title = '{title}', content = '{content}'
   WHERE id = {id}
   """
 
@@ -110,7 +113,6 @@ def update(article, update_article_dto):
     query.format(
       title=update_article_dto['title'], 
       content=update_article_dto['content'], 
-      author=update_article_dto['author'],
       id=article["id"]
     )
   )
