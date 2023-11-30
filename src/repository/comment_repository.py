@@ -17,7 +17,28 @@ from src.repository.util import format_row_to_dict
   #   'updatedAt': Date  
   # }
 def create(self, new_comment_dto):
-  pass
+  query = """
+  INSERT INTO comment( title, content, author) 
+  VALUES('{title}', '{content}', '{author}', '{articleId}')
+  """
+
+  cursor = mysql.connection.cursor()
+  cursor.execute(
+    query.format(
+      title=new_comment_dto['title'], 
+      content=new_comment_dto['content'], 
+      author=new_comment_dto['author'],
+      articleId=new_comment_dto['articleId']
+    )
+  )
+  
+  mysql.connection.commit()
+  
+  cursor.execute('SELECT LAST_INSERT_ID()')
+  id_created = cursor.fetchone()[0]
+  cursor.close()
+
+  return get_by_id(id_created)
 
 
 #@param: update_comment_dto: {

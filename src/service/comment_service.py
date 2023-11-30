@@ -40,7 +40,7 @@ def create(author, new_comment_dto):
     'author': author,
     'idArticle': idArticle,
   }
-  article = comment_repository.save(new_comment_dto)
+  article = comment_repository.create(new_comment_dto)
 
   return to_dto(article)
 

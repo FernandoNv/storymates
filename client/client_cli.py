@@ -64,7 +64,7 @@ def main():
         elif choice == '6':
             article_id = input("Enter the article ID to add a comment: ")
             content = input("Enter the comment content: ")
-            create_comment(article_id, content)
+            create_comment(name, {"content": content, "articleId": article_id })
             print("Comment created successfully!")
 
         elif choice == '7':
