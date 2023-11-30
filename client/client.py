@@ -8,6 +8,10 @@ def get_articles():
     response = requests.get(f'{BASE_URL}/articles')
     return response.json()
 
+def get_article_by_id():
+    response = requests.get(f'{BASE_URL}/articles')
+    return response.json()
+
 def create_article(author, article_data):
     response = requests.post(f'{BASE_URL}/authors/{author}/articles', json=article_data)
     return response.json()
