@@ -1,7 +1,7 @@
 
 # from moque import get_articles, create_article, update_article, delete_article
 # from moque import get_comments, create_comment, update_comment, delete_comment
-from client import get_articles, create_article, update_article, delete_article
+from client import get_articles, get_article_by_id, create_article, update_article, delete_article
 from client import get_comments, create_comment, update_comment, delete_comment
 
 def print_articles():
@@ -15,14 +15,14 @@ def print_comments(article_id):
         print(f"ID: {comment['id']}, Content: {comment['content']}")
 
 def main():
-    name = input("Insira seu nome:")
+    name = input("Enter your name:")
 
     while True:
         print("\n1. List Articles")
-        print("2. Create Article")
-        print("3. Update Article")
-        print("4. Delete Article")
-        print("5. List Comments")
+        print("2. View Article")
+        print("3. Create Article")
+        print("4. Update Article")
+        print("5. Delete Article")
         print("6. Create Comment")
         print("7. Update Comment")
         print("8. Delete Comment")
@@ -34,26 +34,32 @@ def main():
             print_articles()
 
         elif choice == '2':
+            author_id = input("Enter the article id: ")
+            article = get_article_by_id(author_id)
+            print(f"\n  {article['title']}  ")
+            print(f"author: {article['author']}")
+            print(f"\n\n{article['content']}\n\n")
+            for comment in article['comments']:
+                print(f"{comment["id"]}. {comment["author"]}:\n\n {comment["content"]}")
+
+        elif choice == '3':
             title = input("Enter the article title: ")
             content = input("Enter the article content: ")
             create_article(name, {"title": title, "content": content})
             print("Article created successfully!")
 
-        elif choice == '3':
+        elif choice == '4':
+            
             article_id = input("Enter the article ID to update: ")
             title = input("Enter the new article title: ")
             content = input("Enter the new article content: ")
             update_article(name, article_id, {"title": title, "content": content})
             print("Article updated successfully!")
 
-        elif choice == '4':
+        elif choice == '5':
             article_id = input("Enter the article ID to delete: ")
             delete_article(name, article_id)
             print("Article deleted successfully!")
-
-        elif choice == '5':
-            article_id = input("Enter the article ID to list comments: ")
-            print_comments(article_id)
 
         elif choice == '6':
             article_id = input("Enter the article ID to add a comment: ")
