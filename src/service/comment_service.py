@@ -46,17 +46,17 @@ def create(author, new_comment_dto):
 
 
 def update(author, id_comment, update_comment_dto):
-  if 'idArticle' not in update_comment_dto:
-    raise Exception('Article invalid!')
+  # if 'idArticle' not in update_comment_dto:
+  #   raise Exception('Article invalid!')
 
-  idArticle = update_comment_dto['idArticle']
-  article = article_service.get_by_id(idArticle)
+  # idArticle = update_comment_dto['idArticle']
+  # article = article_service.get_by_id(idArticle)
 
-  if article is None: 
-    raise Exception('Article Not found!')
+  # if article is None: 
+  #   raise Exception('Article Not found!')
   
-  if article['id'] != update_comment_dto['idArticle']:
-    raise Exception('Article invalid!')
+  # if article['id'] != update_comment_dto['idArticle']:
+  #   raise Exception('Article invalid!')
 
   comment = comment_repository.get_by_id(id_comment)
 
@@ -65,13 +65,14 @@ def update(author, id_comment, update_comment_dto):
   
   if comment['id'] != id_comment:
     raise Exception('Comment not Found!')
+
+  if comment['author'] != author:
+    raise Exception('Invalid comment author')
   
   update_comment_dto = {
     'id': update_comment_dto['id'],
-    'title': update_comment_dto['title'],
     'content': update_comment_dto['content'],
-    'author': author,
-    'idArticle': idArticle,
+    'author': author
   }
   article = comment_repository.update(update_comment_dto)
 

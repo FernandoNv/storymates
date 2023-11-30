@@ -70,7 +70,7 @@ def main():
         elif choice == '7':
             comment_id = input("Enter the comment ID to update: ")
             content = input("Enter the new comment content: ")
-            update_comment(comment_id, content)
+            update_comment(name, comment_id, {"content": content})
             print("Comment updated successfully!")
 
         elif choice == '8':

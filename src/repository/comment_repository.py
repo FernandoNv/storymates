@@ -57,7 +57,24 @@ def create(self, new_comment_dto):
 #   'updatedAt': Date  
 # }
 def update(self, update_comment_dto):
-  pass
+  query = """
+  UPDATE article 
+  SET content = '{content}'
+  WHERE id = {id}
+  """
+
+  cursor = mysql.connection.cursor()
+  cursor.execute(
+    query.format(
+      content=update_comment_dto['content'], 
+      id=update_comment_dto["id"]
+    )
+  )
+  
+  mysql.connection.commit()
+  cursor.close()
+
+  return get_by_id(update_comment_dto["id"])
 
 
 #@param: id: int
