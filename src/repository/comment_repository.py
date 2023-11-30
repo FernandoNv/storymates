@@ -58,7 +58,7 @@ def create(self, new_comment_dto):
 # }
 def update(self, update_comment_dto):
   query = """
-  UPDATE article 
+  UPDATE comment 
   SET content = '{content}'
   WHERE id = {id}
   """
