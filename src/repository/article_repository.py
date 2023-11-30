@@ -99,10 +99,26 @@ def delete(id_article):
 
 
 def update(article, update_article_dto):
-  try:
-    return __update_values(article, update_article_dto)
-  except Exception as e:
-    raise e
+  query = """
+  UPDATE article 
+  SET title = '{title}', content = '{content}', author = '{author}'
+  WHERE id = {id}
+  """
+
+  cursor = mysql.connection.cursor()
+  cursor.execute(
+    query.format(
+      title=update_article_dto['title'], 
+      content=update_article_dto['content'], 
+      author=update_article_dto['author'],
+      id=article["id"]
+    )
+  )
+  
+  mysql.connection.commit()
+  cursor.close()
+
+  return get_by_id(article["id"])
 
 
 def __update_values(article, update_article_dto):
