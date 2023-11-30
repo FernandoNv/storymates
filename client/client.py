@@ -8,8 +8,8 @@ def get_articles():
     response = requests.get(f'{BASE_URL}/articles')
     return response.json()
 
-def get_article_by_id():
-    response = requests.get(f'{BASE_URL}/articles')
+def get_article_by_id(article_id):
+    response = requests.get(f'{BASE_URL}/articles/{article_id}')
     return response.json()
 
 def create_article(author, article_data):
@@ -21,8 +21,7 @@ def update_article(author, article_id, article_data):
     return response.json()
 
 def delete_article(author, article_id):
-    response = requests.delete(f'{BASE_URL}/authors/{author}/articles/{article_id}')
-    return response.json()
+    requests.delete(f'{BASE_URL}/authors/{author}/articles/{article_id}')
 
 def get_comments(author):
     response = requests.get(f'{BASE_URL}/authors/{author}/comments')
@@ -37,5 +36,4 @@ def update_comment(author, comment_id, comment_data):
     return response.json()
 
 def delete_comment(author, comment_id):
-    response = requests.delete(f'{BASE_URL}/authors/{author}/comments/{comment_id}')
-    return response.json()
+    requests.delete(f'{BASE_URL}/authors/{author}/comments/{comment_id}')

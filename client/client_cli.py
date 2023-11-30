@@ -34,13 +34,13 @@ def main():
             print_articles()
 
         elif choice == '2':
-            author_id = input("Enter the article id: ")
-            article = get_article_by_id(author_id)
+            article_id = input("Enter the article id: ")
+            article = get_article_by_id(article_id)
             print(f"\n  {article['title']}  ")
             print(f"author: {article['author']}")
             print(f"\n\n{article['content']}\n\n")
             for comment in article['comments']:
-                print(f"{comment["id"]}. {comment["author"]}:\n\n {comment["content"]}")
+                print(f"{comment['id']}. {comment['author']}:\n\n {comment['content']}")
 
         elif choice == '3':
             title = input("Enter the article title: ")
@@ -62,9 +62,9 @@ def main():
             print("Article deleted successfully!")
 
         elif choice == '6':
-            article_id = input("Enter the article ID to add a comment: ")
+            idArticle = input("Enter the article ID to add a comment: ")
             content = input("Enter the comment content: ")
-            create_comment(name, {"content": content, "articleId": article_id })
+            create_comment(name, {"content": content, "idArticle": idArticle })
             print("Comment created successfully!")
 
         elif choice == '7':
@@ -75,7 +75,7 @@ def main():
 
         elif choice == '8':
             comment_id = input("Enter the comment ID to delete: ")
-            delete_comment(comment_id)
+            delete_comment(name, comment_id)
             print("Comment deleted successfully!")
 
         elif choice == '9':
