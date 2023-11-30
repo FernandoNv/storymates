@@ -15,6 +15,8 @@ def print_comments(article_id):
         print(f"ID: {comment['id']}, Content: {comment['content']}")
 
 def main():
+    name = input("Insira seu nome:")
+
     while True:
         print("\n1. List Articles")
         print("2. Create Article")
@@ -41,7 +43,7 @@ def main():
             article_id = input("Enter the article ID to update: ")
             title = input("Enter the new article title: ")
             content = input("Enter the new article content: ")
-            update_article(article_id, title, content)
+            update_article(name, {"id": article_id, "title": title, "content": content})
             print("Article updated successfully!")
 
         elif choice == '4':
