@@ -43,7 +43,7 @@ def main():
             article_id = input("Enter the article ID to update: ")
             title = input("Enter the new article title: ")
             content = input("Enter the new article content: ")
-            update_article(name, {"id": article_id, "title": title, "content": content})
+            update_article(name, article_id, {"title": title, "content": content})
             print("Article updated successfully!")
 
         elif choice == '4':
