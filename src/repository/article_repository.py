@@ -1,17 +1,6 @@
 from datetime import datetime
-from flask import Flask, request
-from src.repository.db import db_article
-from flask_mysqldb import MySQL
-from src.server.instance import server
-
-app, api = server.app, server.api
- 
-app.config['MYSQL_HOST'] = 'localhost'
-app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = 'password'
-app.config['MYSQL_DB'] = 'storymates'
- 
-mysql = MySQL(app)
+from src.repository.config import mysql
+from src.repository.util import format_row_to_dict
 
 def get_all():
   query = """
@@ -23,7 +12,7 @@ def get_all():
   cursor = mysql.connection.cursor()
   cursor.execute(query)
 
-  result = __format_row_to_dict(cursor)
+  result = format_row_to_dict(cursor)
   cursor.close()
 
   return result
@@ -40,7 +29,7 @@ def get_all_by_author(author):
   cursor = mysql.connection.cursor()
   cursor.execute(query.format(author=author))
   
-  result = __format_row_to_dict(cursor)
+  result = format_row_to_dict(cursor)
   cursor.close()
   
   return result
@@ -54,7 +43,7 @@ def get_by_id(id_article):
   cursor = mysql.connection.cursor()
   cursor.execute(query_article.format(id_article=id_article))
 
-  article = __format_row_to_dict(cursor)
+  article = format_row_to_dict(cursor)
 
   if article is None:
     raise Exception("Id invalid!")
@@ -121,32 +110,3 @@ def update(article, update_article_dto):
   cursor.close()
 
   return get_by_id(article["id"])
-
-
-def __update_values(article, update_article_dto):
-  if('title' in update_article_dto):
-    article['title'] = update_article_dto['title']
-
-  if('content' in update_article_dto):
-    article['content'] = update_article_dto['content']
-
-    
-
-  return article
-    
-
-def __find_by_id(id_article):
-  index_article = next((i for i, article in enumerate(db_article) if article['id'] == id_article), None)
-  
-  if index_article is None:
-    raise Exception('Not found!')
-  
-  return index_article
-
-
-#https://stackoverflow.com/questions/5010042/mysql-get-column-name-or-alias-from-query
-def __format_row_to_dict(cursor):
-  fields = [field_md[0] for field_md in cursor.description]
-  result = [dict(zip(fields,row)) for row in cursor.fetchall()]
-
-  return result

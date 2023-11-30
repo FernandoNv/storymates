@@ -1,3 +1,6 @@
+from src.repository.config import mysql
+from src.repository.util import format_row_to_dict
+
   #@param: new_comment_dto: {
   #   'title': string,
   #    'content': string,
@@ -53,6 +56,7 @@ def get_by_id(self, id_comment):
 #@param: id: int
 def delete_by_id(self, id_comment):
   pass
+
 
 def get_all_by_id_article(id_article):
   return []
