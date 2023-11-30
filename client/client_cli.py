@@ -48,7 +48,7 @@ def main():
 
         elif choice == '4':
             article_id = input("Enter the article ID to delete: ")
-            delete_article(article_id)
+            delete_article(name, article_id)
             print("Article deleted successfully!")
 
         elif choice == '5':
